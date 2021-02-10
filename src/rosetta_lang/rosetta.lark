@@ -1,0 +1,50 @@
+?start    : statement*
+?statement: "namespace" _SEP VAR block -> namespace
+          | "return" [value|VAR] _NL   -> return
+          | assign _NL
+
+?assign: var_assign _LP (VAR _SEP TYPE ", "?)* _RP TYPE_DEF block  -> function
+       | var_assign TYPE_DEF _DEF_SYMBOL value                         -> def_variable
+       | var_assign TYPE_DEF                                           -> variable
+
+?value: STRING
+      | map
+      | array
+      | SIGNED_INT
+      | SIGNED_FLOAT
+      | "TRUE"  -> true
+      | "FALSE" -> false
+      | "NONE"  -> null
+
+?var_assign: access _SEP VAR
+
+block: _NL [_INDENT statement+ _DEDENT]
+
+TYPE_DEF: _SEP TYPE
+
+access: "public"    -> public
+      | "private"   -> private
+      | "protected" -> protected
+
+// ==========
+// Data Types
+// ==========
+
+// Collection
+array: "[" (value ","?)* "]"
+map  : "{" (value ": " value ","?)* "}"
+
+STRING: "\"" /.*/ "\""
+TYPE  : /[A-Z][a-zA-Z]+/
+VAR   : /[a-z_]+/
+_NL   : /(\n *)+/
+
+// Assorted Symbols
+_SEP       : ":" _WS
+_DEF_SYMBOL: _WS "=" _WS
+_LP        : "("
+_RP        : ")"
+
+%import common (SIGNED_INT, SIGNED_FLOAT)
+%import common.WS_INLINE -> _WS
+%declare _INDENT _DEDENT

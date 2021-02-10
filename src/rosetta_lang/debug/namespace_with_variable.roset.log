@@ -1,0 +1,15 @@
+namespace
+  paletter
+  block
+    def_variable
+      var_assign
+        public
+        color_code
+      : Number
+      10
+    def_variable
+      var_assign
+        public
+        color_name
+      : String
+      "red"

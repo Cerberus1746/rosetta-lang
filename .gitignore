@@ -1,7 +1,8 @@
 .env
+.venv
 
 # Cache
-.pytest_cache/
+.*_cache/
 __pycache__/
 .tox/
 *.pyc
@@ -10,9 +11,7 @@ __pycache__/
 .vscode/
 
 # Coverage
-htmlcov/
-.coverage
-coverage.xml
+.coverage/
 
 # UML
 uml/
@@ -20,3 +19,4 @@ uml/
 # Built Documentation
 _build/
 rosetta_lang.egg-info/
+rosetta_lang.code-workspace

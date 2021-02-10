@@ -1,13 +1,5 @@
 from rosetta_lang import base_types
-import logging
 
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
-
-def test_simple():
-    """
-    just to find a test
-    """
-    assert "namespace" in base_types.RosettaBase._base_names
+def test_iterators_in_base(debug_log_code):
+    debug_log_code(list(map(lambda x: x.values(), base_types.RosettaBase().all_tokens.values())))

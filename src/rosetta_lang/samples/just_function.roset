@@ -1,0 +1,2 @@
+public: is_valid_color(color_code: Number): Bool
+    return

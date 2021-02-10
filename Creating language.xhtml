@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<?xml-stylesheet href="#internal-style" type="text/css"?>
+
+<html vocab="https://schema.org/" typeof="BlogPosting" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd">
+
+<head>
+    <title property="headline" id="document-title">Creating Coding Language</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style type="text/css" id="internal-style">
+        table {
+            border: 1px black solid;
+        }
+    </style>
+</head>
+
+<body onload="main()">
+    <h1 id="document-title-header"></h1>
+    <table vocab="https://schema.org/" typeof="ScholarlyArticle">
+        <tr>
+            <td>
+                <meta property="image"
+                    content="https://cdn-media-1.freecodecamp.org/images/1*vzwAxAI6RB89kPZZJIGkOA.png" />
+                <span property="author">Wold, William W.</span>
+                <span property="headline">
+                    I wrote a programming language. Here’s how you can, too.
+                </span>
+                <span property="publisher" typeof="Organization">
+                    <span property="name">Freecodecamp</span>
+                    <span property="location" typeof="VirtualLocation">
+                        <span property="url">https://www.freecodecamp.org/</span>
+                    </span>
+                </span>
+                <time property="datePublished" datetime="2017-03">3, 2017</time>
+                <a property="mainEntityOfPage"
+                    href="https://www.freecodecamp.org/news/the-programming-language-pipeline-91d3f449c919/">Available
+                    here</a>.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <blockquote property="text">
+                    <p>
+                        There are two major types of languages, compiled and interpreted:
+                    </p>
+                    <ul>
+                        <li>
+                            A compiler figures out everything a program will do, turns it into "machine code" (a format
+                            the computer can run really fast), then saves that to be executed later.
+                        </li>
+                        <li>
+                            An interpreter steps through the source code line by line, figuring out what it’s doing as
+                            it goes.
+                        </li>
+                    </ul>
+                    <p>
+                        A programming language is generally structured as a pipeline. That is, it has several stages.
+                        Each stage has data formatted in a specific, well defined way. It also has functions to
+                        transform data from each stage to the next.
+                    </p>
+                    <p>
+                        The first stage is a string containing the entire input source file. The final stage is
+                        something that can be run. This will all become clear as we go through the Pinecone pipeline
+                        step by step.
+                    </p>
+
+                    <h2>Lexer</h2>
+                    <p>
+                        The lexer is supposed to take in a string containing an entire files worth of source code and
+                        spit out a list containing every token.
+                    </p>
+                    <p>
+                        Future stages of the pipeline will not refer back to the original source code, so the lexer must
+                        produce all the information needed by them. The reason for this relatively strict pipeline
+                        format is that the lexer may do tasks such as removing comments or detecting if something is a
+                        number or identifier. You want to keep that logic locked inside the lexer, both so you don’t
+                        have to think about these rules when writing the rest of the language, and so you can change
+                        this type of syntax all in one place.
+                    </p>
+
+                    <h2>Parser</h2>
+                    <p>
+                        The second stage of the pipeline is the parser. The parser turns a list of tokens into a tree of
+                        nodes. A tree used for storing this type of data is known as an Abstract Syntax Tree, or AST. At
+                        least in Pinecone, the AST does not have any info about types or which identifiers are which. It
+                        is simply structured tokens.
+                    </p>
+                </blockquote>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        function main() {
+            document.documentTitle = document.getElementById("document-title").innerText;
+            document.getElementById("document-title-header").innerText = document.documentTitle;
+        }
+    </script>
+</body>
+
+</html>

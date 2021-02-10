@@ -13,19 +13,19 @@ jobs:
       max-parallel: 5
       matrix:
         language:
-        - python
+          - python
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@master
+      - name: Checkout repository
+        uses: actions/checkout@master
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@master
-      with:
-        languages: ${{ matrix.language }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@master
+        with:
+          languages: ${{ matrix.language }}
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@master
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@master
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@master
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@master
