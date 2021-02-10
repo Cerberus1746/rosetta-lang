@@ -4,17 +4,37 @@
 # Cache
 .*_cache/
 __pycache__/
-.tox/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Ide
-.vscode/
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Coverage
 .coverage/
 
-# UML
-uml/
+# Sphinx documentation
+docs/build/
+docs/api/
 
 # Built Documentation
 _build/
