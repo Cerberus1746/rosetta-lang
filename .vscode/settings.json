@@ -1,0 +1,12 @@
+{
+    "restructuredtext.confPath": "${workspaceFolder}\\docs",
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/src",
+        "D:/Projetos/generic_lexer/src"
+    ],
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src",
+        "D:/Projetos/generic_lexer/src"
+    ],
+    "restructuredtext.languageServer.disabled": true,
+}

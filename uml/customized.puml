@@ -1,0 +1,7 @@
+@startuml hello
+
+rectangle "Example of Tree\n\
+|_ + first_line()\n\
+|_ Second line"
+
+@enduml

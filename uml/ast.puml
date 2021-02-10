@@ -1,0 +1,92 @@
+@startuml AST
+hide empty members
+
+skinparam {
+    shadowing false
+}
+
+
+skinparam CircledCharacter {
+    FontSize 10
+    FontName Arial
+}
+
+
+skinparam Class {
+    BorderColor black
+    BorderThickness 1
+    ArrowColor black
+}
+
+
+package Rosetta {
+    package DefaultTypes {
+        class Int
+        class String
+        class Statement
+        class Map<Key, Value>
+
+
+        class List<T> {
+            + append(value: T)
+            + remove(value: T)
+            + get(index: Int)
+            + set(index: Int, value: T)
+        }
+
+
+        class VariableDeclaration<VarType> {
+            name: String
+            access: Access
+            value: VarType
+        }
+
+
+        enum Access {
+            public
+            private
+            protected
+        }
+    }
+
+
+    class Block {
+        + body: List<Statement>
+        + variables: List<VariableDeclaration>
+    }
+
+
+    class FunctionType {
+        + return_type: Type
+        ---
+        + return(statement: Statement)
+    }
+
+
+    class ClassType {
+        + child_declaration(child: ClassType)
+        -- constructors --
+        + before_child_constructor(child: ClassInstance, \
+            **kwargs: Map<String, VariableDeclaration>)
+        + after_child_constructor(child: ClassInstance, \
+            **kwargs: Map<String, VariableDeclaration>)
+        + constructor(self: ClassInstance, \
+            **kwargs: Map<String, VariableDeclaration>)
+    }
+
+
+    class Test {
+        + assert(statement: Statement): Never | None
+    }
+
+
+    Block <|-- FunctionType
+    Block <|-- ClassType
+    Block <|-- Test
+
+    FunctionType <|-- ClassType
+
+    Test "parent" ||--|| "test" FunctionType
+    Test "parent" ||--|| "test" ClassType
+}
+@enduml
