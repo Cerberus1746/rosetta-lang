@@ -1,15 +1,13 @@
-?start   : namespace*
-
-namespace: "namespace" _COLON VAR block
+?start: type_definition*
 
 type_definition: access_col generic_type [_LPARENT generic_type ("," generic_type)* _RPARENT] block
 type_call      : generic_type _LPARENT call_args* _RPARENT
 
 function     : access_col type_def VAR _LPARENT function_args* _RPARENT block?
-function_args: [generic_type _COLON] _MUL? _MUL? VAR _COMMA? [_EQUALS value]
+function_args: [generic_type _COLON] _STAR? _STAR? VAR _COMMA? [_EQUALS value]
 
 function_call: (hierarchy | VAR) _LPARENT call_args* _RPARENT
-call_args    : _MUL? _MUL? atom _COMMA? [_EQUALS atom]
+call_args    : _STAR? _STAR? atom _COMMA? [_EQUALS atom]
 
 key_index_call: (hierarchy | VAR) _LSQUARE_BRACKET atom _RSQUARE_BRACKET
 
@@ -23,7 +21,9 @@ key_index_call: (hierarchy | VAR) _LSQUARE_BRACKET atom _RSQUARE_BRACKET
 ?variable: access_col type_def var_creation (_COMMA var_creation)*
 ?access_col: access _COLON
 
-?var_creation: _PLUS? _QUESTION_MARK? VAR
+var_creation: _PLUS _QUESTION_MARK VAR -> optional_in_constructor
+            | _PLUS VAR -> set_in_constructor
+            | VAR
 
 ?atom: value
      | VAR
@@ -51,8 +51,8 @@ comparators: _LT -> lower_than
 math       : _PLUS -> plus
            | "-" -> minus
            | "/" -> division
-           | _MUL -> multiplication
-           | _MUL _MUL -> squared
+           | _STAR -> multiplication
+           | _STAR _STAR -> squared
 
 ?value: STRING
       | map
@@ -86,8 +86,9 @@ VAR   : /[a-z_]+/
 // Assorted Symbols
 _COLON          : ":"
 _EQUALS         : "="
-_MUL            : "*"
-_PLUS           : "+"
+
+_STAR            : "*"
+_PLUS            : "+"
 
 _QUESTION_MARK  : "?"
 

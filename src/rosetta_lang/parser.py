@@ -2,8 +2,6 @@ import pathlib
 import lark
 from lark import exceptions
 
-from . import tree_indenter
-
 
 curr_path = pathlib.Path(__file__).parent
 

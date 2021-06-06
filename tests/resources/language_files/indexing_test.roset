@@ -1,4 +1,4 @@
-namespace: indexing_test {
+public: IndexingTest {
   public: Dict<Str, Int>: cars  = {
     "Stratus": 1980,
     "Excavator" : 2010,

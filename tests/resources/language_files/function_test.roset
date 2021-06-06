@@ -1,4 +1,4 @@
-namespace: function_test {
+public: FunctionTest {
   public: Int: sum(Int: a, b) {
     return: a + b
   }
