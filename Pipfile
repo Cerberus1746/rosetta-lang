@@ -13,4 +13,4 @@ urllib3 = ">=1.26.4"
 allow_prereleases = true
 
 [packages]
-lark-parser = {extras = ["regex"], version = ">=0.11"}
+lark-parser = ">=0.11"
