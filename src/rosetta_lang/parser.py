@@ -14,7 +14,7 @@ lark_parser = lark.Lark.open(
     str(curr_path / "rosetta.lark"),
     parser="lalr",
     maybe_placeholders=True,
-    regex=True,
+    # regex=True,
 )
 
 

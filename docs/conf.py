@@ -6,19 +6,18 @@ list see the documentation:
 https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 Path Setup
+"""
 import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../src"))
 
-import generic_lexer
+import rosetta_lang
 
 # General configuration
 # ---------------------
 
-project = generic_lexer.__package__
-author = generic_lexer.__author__
-version = generic_lexer.__version__
+project = rosetta_lang.__package__
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
@@ -45,10 +44,7 @@ Project Information
 
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-
 """
-General Configuration
-
 locale_dirs = ["locale/"]
 gettext_compact = False
 
