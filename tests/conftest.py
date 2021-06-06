@@ -4,10 +4,26 @@ from pathlib import Path
 
 import pytest
 
+import lark
+
 from rosetta_lang import parser
 
 
 current_folder = Path(__file__).parent
+
+parser_with_all_symbols = lark.Lark.open(
+    str(parser.parser_file),
+    parser="lalr",
+    maybe_placeholders=True,
+    keep_all_tokens=True,
+)
+
+parser_with_transformer = lark.Lark.open(
+    str(parser.parser_file),
+    parser="lalr",
+    maybe_placeholders=True,
+    transformer=parser.MainTransformer,
+)
 
 work_dir = Path(os.getenv("TOX_WORK_DIR", current_folder))
 current_tox_env = os.getenv("TOX_ENV_NAME", "")
@@ -52,7 +68,17 @@ def debug_log_code(curr_logger):
 def parse_test(open_text_to_parse, debug_log_code):
     def inner_parse_test(test_name, file_name):
         to_parse, opened_file = open_text_to_parse(file_name)
-        result = parser.parse(opened_file, to_parse)
+        result = parser_with_all_symbols.parse(to_parse)
+        debug_log_code(test_name, to_parse, result)
+
+    return inner_parse_test
+
+
+@pytest.fixture(scope="session")
+def parse_transform(open_text_to_parse, debug_log_code):
+    def inner_parse_test(test_name, file_name):
+        to_parse, opened_file = open_text_to_parse(file_name)
+        result = parser_with_transformer.parse(to_parse)
         debug_log_code(test_name, to_parse, result)
 
     return inner_parse_test

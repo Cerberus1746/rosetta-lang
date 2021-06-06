@@ -12,4 +12,7 @@
     "python.pythonPath": ".venv\\Scripts\\python.exe",
     "python.testing.pytestEnabled": true,
     "pythonTestExplorer.testFramework": "pytest",
+    "python.formatting.blackArgs": [
+        "-l 79"
+    ],
 }

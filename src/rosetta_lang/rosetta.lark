@@ -1,4 +1,4 @@
-?start: type_definition*
+?start: statement* type_definition
 
 type_definition: access_col generic_type [_LPARENT generic_type ("," generic_type)* _RPARENT] block
 type_call      : generic_type _LPARENT call_args* _RPARENT
@@ -6,19 +6,26 @@ type_call      : generic_type _LPARENT call_args* _RPARENT
 function     : access_col type_def VAR _LPARENT function_args* _RPARENT block?
 function_args: [generic_type _COLON] _STAR? _STAR? VAR _COMMA? [_EQUALS value]
 
-function_call: (hierarchy | VAR) _LPARENT call_args* _RPARENT
-call_args    : _STAR? _STAR? atom _COMMA? [_EQUALS atom]
+function_call: get_var _LPARENT call_args* _RPARENT
+call_args    : _STAR _STAR atom _COMMA? [_EQUALS atom] -> key_arg
+             | _STAR atom _COMMA? [_EQUALS atom] -> list_arg
+             | atom _COMMA? [_EQUALS atom] -> arg
 
-key_index_call: (hierarchy | VAR) _LSQUARE_BRACKET atom _RSQUARE_BRACKET
+get_key: get_var get_key_index
+get_key_index: _LSQUARE_BRACKET atom _RSQUARE_BRACKET
+
+get_var: hierarchy
+       | VAR
 
 ?assign: function
        | type_definition
-       | variable
+       | get_key _EQUALS atom -> set_key_value
        | variable_with_value
-       | key_index_call _EQUALS atom -> set_key_value
+       | variable
 
 ?variable_with_value: access_col type_def var_creation _EQUALS atom
 ?variable: access_col type_def var_creation (_COMMA var_creation)*
+?hierarchy: VAR "." VAR ("." VAR)*
 ?access_col: access _COLON
 
 var_creation: _PLUS _QUESTION_MARK VAR -> optional_in_constructor
@@ -26,10 +33,9 @@ var_creation: _PLUS _QUESTION_MARK VAR -> optional_in_constructor
             | VAR
 
 ?atom: value
-     | VAR
+     | get_key
+     | get_var
      | TYPE
-     | hierarchy
-     | key_index_call
      | function_call
      | type_call
      | atom comparators atom -> boolean_operation
@@ -40,21 +46,21 @@ var_creation: _PLUS _QUESTION_MARK VAR -> optional_in_constructor
 ?line : statement
       | function_call
       | assign
-?block: _LBRACKET line+ _RBRACKET
+block: _LBRACKET line+ _RBRACKET
 
 comparators: _LT -> lower_than
            | _GT -> greater_than
            | _LT _EQUALS -> lower_than_or_equal
            | _GT _EQUALS -> geater_than_or_equal
            | _EQUALS _EQUALS -> equals
-           | "!=" -> not_equals
+           | _EXCLAMATION _EQUALS -> not_equals
 math       : _PLUS -> plus
-           | "-" -> minus
-           | "/" -> division
-           | _STAR -> multiplication
+           | _HYPHEN -> minus
+           | _SLASH -> division
            | _STAR _STAR -> squared
+           | _STAR -> multiplication
 
-?value: STRING
+?value: ESCAPED_STRING
       | map
       | array
       | SIGNED_INT
@@ -62,8 +68,8 @@ math       : _PLUS -> plus
       | "TRUE"  -> true
       | "FALSE" -> false
       | "NONE"  -> null
-access: "public"    -> public
-      | "private"   -> private
+access: "public" -> public
+      | "private" -> private
       | "protected" -> protected
 
 // ==========
@@ -75,20 +81,22 @@ array: _LSQUARE_BRACKET (value ","?)* _RSQUARE_BRACKET
 map  : _LBRACKET (value ":" value _COMMA?)* _RBRACKET
 
 ?type_def    : generic_type _COLON
-?generic_type: TYPE (_LT TYPE+ (_COMMA TYPE)* _GT)?
+?generic_type: TYPE type_generics?
+type_generics: _LT TYPE+ (_COMMA TYPE)* _GT
 
-hierarchy: VAR "." VAR ("." VAR)*
-
-STRING: "\"" /.*/ "\""
+// Base Values
 TYPE  : /[A-Z][a-zA-Z]+/
 VAR   : /[a-z_]+/
 
-// Assorted Symbols
+// Definition
 _COLON          : ":"
 _EQUALS         : "="
 
+// Math Related
 _STAR            : "*"
 _PLUS            : "+"
+_HYPHEN         : "-"
+_SLASH          : "/"
 
 _QUESTION_MARK  : "?"
 
@@ -106,7 +114,8 @@ _GT             : ">"
 
 _SEMI_COLUMN    : ";"
 _COMMA          : ","
+_EXCLAMATION    : "!"
 
-%import common (SIGNED_INT, SIGNED_FLOAT)
+%import common (SIGNED_INT, SIGNED_FLOAT, ESCAPED_STRING )
 %import common.WS
 %ignore WS

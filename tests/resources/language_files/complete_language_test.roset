@@ -1,5 +1,10 @@
-public: Main {
+import: "Any"
+import: "all"
+
+public: ColorBase {
+  public: String: name
   public: Map<String, ColorBase>: color_types
+  public: Bool: is_created = TRUE
 
   public: Bool: is_valid_color(Number: color_code, max_range, min_range = 0){
     return: min_range < color_code < max_range
@@ -9,10 +14,6 @@ public: Main {
     public: Number: +red, +green, +blue
     public: Hex: +?hex_code
   }
-}
-
-public: ColorBase {
-  public: String: name
 
   public: None: child_declaration() {
     color_types[child.__name__] = child
