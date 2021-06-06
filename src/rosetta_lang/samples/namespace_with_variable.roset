@@ -1,3 +1,0 @@
-namespace: paletter
-    public: color_code: Number = 10
-    public: color_name: String = "red"

@@ -1,11 +1,58 @@
-?start    : statement*
-?statement: "namespace" _SEP VAR block -> namespace
-          | "return" [value|VAR] _NL   -> return
-          | assign _NL
+?start   : namespace*
 
-?assign: var_assign _LP (VAR _SEP TYPE ", "?)* _RP TYPE_DEF block  -> function
-       | var_assign TYPE_DEF _DEF_SYMBOL value                         -> def_variable
-       | var_assign TYPE_DEF                                           -> variable
+namespace: "namespace" _COLON VAR block
+
+type_definition: access_col generic_type [_LPARENT generic_type ("," generic_type)* _RPARENT] block
+type_call      : generic_type _LPARENT call_args* _RPARENT
+
+function     : access_col type_def VAR _LPARENT function_args* _RPARENT block?
+function_args: [generic_type _COLON] _MUL? _MUL? VAR _COMMA? [_EQUALS value]
+
+function_call: (hierarchy | VAR) _LPARENT call_args* _RPARENT
+call_args    : _MUL? _MUL? atom _COMMA? [_EQUALS atom]
+
+key_index_call: (hierarchy | VAR) _LSQUARE_BRACKET atom _RSQUARE_BRACKET
+
+?assign: function
+       | type_definition
+       | variable
+       | variable_with_value
+       | key_index_call _EQUALS atom -> set_key_value
+
+?variable_with_value: access_col type_def var_creation _EQUALS atom
+?variable: access_col type_def var_creation (_COMMA var_creation)*
+?access_col: access _COLON
+
+?var_creation: _PLUS? _QUESTION_MARK? VAR
+
+?atom: value
+     | VAR
+     | TYPE
+     | hierarchy
+     | key_index_call
+     | function_call
+     | type_call
+     | atom comparators atom -> boolean_operation
+     | atom math atom -> mathematical_operation
+
+?statement: VAR [_COLON atom?]
+
+?line : statement
+      | function_call
+      | assign
+?block: _LBRACKET line+ _RBRACKET
+
+comparators: _LT -> lower_than
+           | _GT -> greater_than
+           | _LT _EQUALS -> lower_than_or_equal
+           | _GT _EQUALS -> geater_than_or_equal
+           | _EQUALS _EQUALS -> equals
+           | "!=" -> not_equals
+math       : _PLUS -> plus
+           | "-" -> minus
+           | "/" -> division
+           | _MUL -> multiplication
+           | _MUL _MUL -> squared
 
 ?value: STRING
       | map
@@ -15,13 +62,6 @@
       | "TRUE"  -> true
       | "FALSE" -> false
       | "NONE"  -> null
-
-?var_assign: access _SEP VAR
-
-block: _NL [_INDENT statement+ _DEDENT]
-
-TYPE_DEF: _SEP TYPE
-
 access: "public"    -> public
       | "private"   -> private
       | "protected" -> protected
@@ -31,20 +71,41 @@ access: "public"    -> public
 // ==========
 
 // Collection
-array: "[" (value ","?)* "]"
-map  : "{" (value ": " value ","?)* "}"
+array: _LSQUARE_BRACKET (value ","?)* _RSQUARE_BRACKET
+map  : _LBRACKET (value ":" value _COMMA?)* _RBRACKET
+
+?type_def    : generic_type _COLON
+?generic_type: TYPE (_LT TYPE+ (_COMMA TYPE)* _GT)?
+
+hierarchy: VAR "." VAR ("." VAR)*
 
 STRING: "\"" /.*/ "\""
 TYPE  : /[A-Z][a-zA-Z]+/
 VAR   : /[a-z_]+/
-_NL   : /(\n *)+/
 
 // Assorted Symbols
-_SEP       : ":" _WS
-_DEF_SYMBOL: _WS "=" _WS
-_LP        : "("
-_RP        : ")"
+_COLON          : ":"
+_EQUALS         : "="
+_MUL            : "*"
+_PLUS           : "+"
+
+_QUESTION_MARK  : "?"
+
+_LPARENT        : "("
+_RPARENT        : ")"
+
+_LSQUARE_BRACKET: "["
+_RSQUARE_BRACKET: "]"
+
+_LBRACKET       : "{"
+_RBRACKET       : "}"
+
+_LT             : "<"
+_GT             : ">"
+
+_SEMI_COLUMN    : ";"
+_COMMA          : ","
 
 %import common (SIGNED_INT, SIGNED_FLOAT)
-%import common.WS_INLINE -> _WS
-%declare _INDENT _DEDENT
+%import common.WS
+%ignore WS

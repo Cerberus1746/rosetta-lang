@@ -1,8 +1,0 @@
-No terminal defined for '<' at line 2 col 29
-
-    public: color_types: Map<String, ColorBase>
-                            ^
-
-Expecting: {'_SEP', 'COMMA', 'TYPE_DEF', '_DEF_SYMBOL', 'RBRACE', '_NL', 'LSQB', 'RSQB', 'STRING', 'TYPE', '__ANON_0', 'VAR', '_LP', 'LBRACE', 'SIGNED_INT', 'SIGNED_FLOAT', '_RP'}
-
-Previous tokens: Token('TYPE_DEF', ': Map')

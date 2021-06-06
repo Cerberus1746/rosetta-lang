@@ -1,0 +1,6 @@
+namespace: paletter {
+  public: RGB {
+    public: Number: +red, +green, +blue
+    public: Hex: +?hex_code
+  }
+}

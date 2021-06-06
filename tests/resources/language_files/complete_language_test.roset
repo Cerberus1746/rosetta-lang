@@ -1,0 +1,26 @@
+namespace: paletter {
+  public: Map<String, ColorBase>: color_types
+
+  public: Bool: is_valid_color(Number: color_code, max_range, min_range = 0){
+    return: min_range < color_code < max_range
+  }
+
+  public: ColorBase {
+    public: String: name
+
+    public: None: child_declaration() {
+      color_types[child.__name__] = child
+    }
+
+    public: None: before_child_constructor(Array<Any>: *args, Map<String, Any>: **kwargs) {
+      assert: child.is_valid(*args, **kwargs)
+    }
+
+    public: Bool: is_valid(Array<Any>: *args, Map<String, Any>: **kwargs)
+  }
+
+  public: RGB(ColorBase) {
+    public: Number: +red, +green, +blue
+    public: Hex: +?hex_code
+  }
+}

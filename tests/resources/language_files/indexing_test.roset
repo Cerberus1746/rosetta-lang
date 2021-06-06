@@ -1,0 +1,8 @@
+namespace: indexing_test {
+  public: Dict<Str, Int>: cars  = {
+    "Stratus": 1980,
+    "Excavator" : 2010,
+  }
+
+  public: Int: stratus = cars["Stratus"]
+}
