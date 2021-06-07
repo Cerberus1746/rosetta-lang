@@ -19,5 +19,9 @@ class ValuesTransformer:
 
     SIGNED_INT = int
     SIGNED_FLOAT = float
+    VAR = str
 
     array = list
+
+
+__all__ = ("ValuesTransformer")

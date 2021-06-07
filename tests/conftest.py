@@ -60,7 +60,11 @@ def debug_log_code(curr_logger):
     def inner_debug_log_code(curr_title, text_to_parse, parse_result):
         curr_logger.debug(f"## {curr_title}")
         curr_logger.debug("Code to be parsed:\n```\n" + text_to_parse + "```")
-        curr_logger.debug("Result:\n```\n" + parse_result.pretty() + "```")
+
+        if hasattr(parse_result, "pretty"):
+            curr_logger.debug("Result:\n```\n" + parse_result.pretty() + "```")
+        else:
+            curr_logger.debug("Result:\n```\n" + repr(parse_result) + "```")
 
     return inner_debug_log_code
 

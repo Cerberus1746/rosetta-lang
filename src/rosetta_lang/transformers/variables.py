@@ -1,16 +1,17 @@
-import dataclasses
+from dataclasses import dataclass
 from typing import Any
 
 from .. import misc_enums
 
-@dataclasses.dataclass
+
+@dataclass
 class SetVariable:
     name: str
     in_constructor: bool
     is_optional: bool
 
 
-@dataclasses.dataclass
+@dataclass
 class Variable:
     set_var: SetVariable
     access: misc_enums.Access
@@ -40,3 +41,9 @@ class VariableTransformer:
             instanced_var_list.append(Variable(curr_var, var_access, var_type))
 
         return instanced_var_list
+
+
+__all__ = (
+    "SetVariable",
+    "VariableTransformer",
+)
