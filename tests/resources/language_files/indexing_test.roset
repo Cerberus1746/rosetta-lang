@@ -7,5 +7,5 @@ public: IndexingTest {
   public: List: years = [1980, 2010]
 
   public: Int: stratus = cars["Stratus"]
-  cars["Escalate"] = 1999
+  cars["Escalate"] = years[0]
 }

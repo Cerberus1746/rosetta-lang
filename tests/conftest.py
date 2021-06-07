@@ -7,6 +7,7 @@ import pytest
 import lark
 
 from rosetta_lang import parser
+from rosetta_lang.transformers import main
 
 
 current_folder = Path(__file__).parent
@@ -22,7 +23,7 @@ parser_with_transformer = lark.Lark.open(
     str(parser.parser_file),
     parser="lalr",
     maybe_placeholders=True,
-    transformer=parser.MainTransformer,
+    transformer=main.MainTransformer,
 )
 
 work_dir = Path(os.getenv("TOX_WORK_DIR", current_folder))

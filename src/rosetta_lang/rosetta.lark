@@ -12,10 +12,10 @@ call_args    : _STAR _STAR atom _COMMA? [_EQUALS atom] -> key_arg
              | atom _COMMA? [_EQUALS atom] -> arg
 
 get_key: get_var get_key_index
-get_key_index: _LSQUARE_BRACKET atom _RSQUARE_BRACKET
+?get_key_index: _LSQUARE_BRACKET atom _RSQUARE_BRACKET
 
-get_var: hierarchy
-       | VAR
+?get_var: hierarchy
+        | VAR
 
 ?assign: function
        | type_definition
@@ -23,14 +23,14 @@ get_var: hierarchy
        | variable_with_value
        | variable
 
-?variable_with_value: access_col type_def var_creation _EQUALS atom
-?variable: access_col type_def var_creation (_COMMA var_creation)*
+?variable_with_value: access_col type_def var_set _EQUALS atom
+?variable: access_col type_def var_set (_COMMA var_set)*
 ?hierarchy: VAR "." VAR ("." VAR)*
 ?access_col: access _COLON
 
-var_creation: _PLUS _QUESTION_MARK VAR -> optional_in_constructor
-            | _PLUS VAR -> set_in_constructor
-            | VAR
+?var_set: _PLUS _QUESTION_MARK VAR -> optional_in_constructor
+        | _PLUS VAR -> set_in_constructor
+        | VAR -> regular_var
 
 ?atom: value
      | get_key

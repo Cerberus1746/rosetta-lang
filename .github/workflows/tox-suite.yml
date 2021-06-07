@@ -56,40 +56,40 @@ jobs:
           name: coverage-data
           path: .coverage/
 
-  coverage:
-    needs: test-tox
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
+  # coverage:
+  #   needs: test-tox
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v2
 
-      - name: Update pip
-        run: python -m pip install --upgrade pip
+  #     - name: Update pip
+  #       run: python -m pip install --upgrade pip
 
-      - name: Pip cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ needs.test-tox.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/tox.ini') }}
-          restore-keys: ${{ runner.os }}-pip-
+  #     - name: Pip cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ${{ needs.test-tox.outputs.dir }}
+  #         key: ${{ runner.os }}-pip-${{ hashFiles('**/tox.ini') }}
+  #         restore-keys: ${{ runner.os }}-pip-
 
-      - name: Install dependencies
-        run: pip install tox tox-gh-actions
+  #     - name: Install dependencies
+  #       run: pip install tox tox-gh-actions
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: coverage-data
-          path: .coverage/
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: coverage-data
+  #         path: .coverage/
 
-      - name: Coverage
-        run: tox -e report
+  #     - name: Coverage
+  #       run: tox -e report
 
-      - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.4
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID }}
-        with:
-          coverageLocations: |
-            .coverage/coverage.xml:coverage.py
+  #     - name: Publish code coverage
+  #       uses: paambaati/codeclimate-action@v2.7.4
+  #       env:
+  #         CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID }}
+  #       with:
+  #         coverageLocations: |
+  #           .coverage/coverage.xml:coverage.py
