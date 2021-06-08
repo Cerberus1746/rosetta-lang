@@ -26,6 +26,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.doctest",
     "sphinx_autodoc_typehints",
+    "sphinx_rtd_theme",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,7 +52,7 @@ gettext_compact = False
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["output", "_build", "Thumbs.db", ".DS_Store"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -59,7 +60,6 @@ pygments_style = "sphinx"
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 """
 List of patterns, relative to source directory, that match files and
 directories to ignore when looking for source files. This pattern also affects
@@ -73,5 +73,9 @@ extensions = [
     "sphinx_autodoc_typehints",
 ]
 
-intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
-html_theme = "nature"
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "lark-parser": ("https://lark-parser.readthedocs.io/en/latest/", None),
+}
+
+html_theme = "sphinx_rtd_theme"

@@ -1,4 +1,13 @@
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+================
+Rosetta Language
+================
 
+.. toctree::
+  :maxdepth: 1
+  :caption: Contents:
+
+  contributing
+  installation
+  license
+
+  api/index

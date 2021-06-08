@@ -1,5 +1,6 @@
 .env
 .venv
+docs/output
 
 # test and logging
 .tox
@@ -47,3 +48,6 @@ rosetta_lang.code-workspace
 
 # IDE
 .vscode
+
+# c sources for study
+c_src
