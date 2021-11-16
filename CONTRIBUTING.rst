@@ -104,7 +104,7 @@ Before you submit a pull request, check that it meets these guidelines:
 #. It also should pass linting checks.
 #. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring.
-#. The pull request should work for Python 3.6, 3.7, 3.8 and
+#. The pull request should work for Python 3.7, 3.8 and
    3.9, and for PyPy3. Check
    https://github.com/Cerberus1746/generic_lexer/actions.
 
