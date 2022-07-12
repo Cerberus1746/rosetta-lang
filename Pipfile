@@ -15,4 +15,3 @@ allow_prereleases = true
 
 [packages]
 lark-parser = ">=0.11"
-peachpy = {git = "https://github.com/Maratyszcza/PeachPy"}
