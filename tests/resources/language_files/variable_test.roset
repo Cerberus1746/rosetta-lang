@@ -1,4 +1,4 @@
-public: VariableTest {
-  public: Number: color_code = 10
-  public: String: color_name = "red"
+public VariableTest {
+  public Number color_code = 10
+  public String color_name = "red"
 }

@@ -22,9 +22,9 @@ lark_parser = lark.Lark.open(
 def parse(file_path: pathlib.Path, to_parse, *args, **kwargs):
     try:
         return lark_parser.parse(to_parse, *args, **kwargs)
-    except(
+    except (
         exceptions.UnexpectedToken,
-        exceptions.UnexpectedCharacters
+        exceptions.UnexpectedCharacters,
     ) as parse_error:
         error_tuple = (
             str(file_path.resolve()),

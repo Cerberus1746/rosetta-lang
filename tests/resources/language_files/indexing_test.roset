@@ -1,11 +1,11 @@
-public: IndexingTest {
-  public: Dict<Str, Int>: cars  = {
+public IndexingTest {
+  public Dict<Str, Int> cars  = {
     "Stratus": 1980,
     "Excavator" : 2010,
   }
 
-  public: List: years = [1980, 2010]
+  public List years = [1980, 2010]
 
-  public: Int: stratus = cars["Stratus"]
+  public Int stratus = cars["Stratus"]
   cars["Escalate"] = years[0]
 }

@@ -8,7 +8,9 @@ curr_sentence = ""
 exception_set = set()
 keywords = set()
 
-base_file = Path(__file__).parent / ".." / ".." / "schemas"/ "base_language.roset"
+base_file = (
+    Path(__file__).parent / ".." / ".." / "schemas" / "base_language.roset"
+)
 
 with base_file.open() as curr_file:
     while curr_char := curr_file.read(1):

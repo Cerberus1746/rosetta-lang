@@ -36,6 +36,7 @@ class MainTransformer(
 
     start = block
 
+
 __all__ = (
     "Statement",
     "MainTransformer",

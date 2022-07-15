@@ -19,6 +19,7 @@ class Access(enum.Enum):
     :var PROTECTED: Things that will be only available in the current context
                     and trough inheritance.
     """
+
     PUBLIC = 0b0
     PRIVATE = 0b1
     PROTECTED = 0b10

@@ -24,4 +24,4 @@ class ValuesTransformer:
     array = list
 
 
-__all__ = ("ValuesTransformer")
+__all__ = "ValuesTransformer"

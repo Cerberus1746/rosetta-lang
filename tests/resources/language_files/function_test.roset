@@ -1,19 +1,19 @@
-public: FunctionTest {
-  public: Int: sum(Int: a, b) {
-    return: a + b
+public FunctionTest {
+  public Int sum(Int a, b) {
+    return a + b
   }
 
-  public: Bool: is_valid_color(Number: color_code) {
+  public Bool is_valid_color(Number color_code) {
     return
   }
 
-  public: ColorBase: get_color(Number: color_code) {
-    return: ColorBase(color_code)
+  public ColorBase get_color(Number color_code) {
+    return ColorBase(color_code)
   }
 
-  public: None: main() {
-    public: Int: first = 15
-    public: Int: second = 23
+  public None main() {
+    public Int first = 15
+    public Int second = 23
 
     sum(first, second)
     sum(10, 20)

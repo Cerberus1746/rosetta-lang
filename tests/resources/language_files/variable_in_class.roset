@@ -1,4 +1,4 @@
-public: VariableInClass {
-  public: Number: +red, +green, +blue
-  public: Hex: +?hex_code
+public VariableInClass {
+  public Number +red, +green, +blue
+  public Hex +?hex_code
 }
